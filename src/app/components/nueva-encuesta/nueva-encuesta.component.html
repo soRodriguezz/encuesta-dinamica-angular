@@ -1,0 +1,55 @@
+<form class="mt-5" [formGroup]="formPreguntas" >
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Nombre de la encuesta</label>
+            <input formControlName="nameAnswer" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="divider"></div> 
+
+    <div>
+        <div class="mb-3">
+          <button (click)="nuevaPregunta()" class="btn btn-primary">Agregar pregunta</button>
+        </div>
+
+        <div formArrayName="preguntas" >
+            <div *ngFor="let e of preguntas.controls; index as i" id={{i+1}} class="containerAccordion">
+                <div [formGroup]="e">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <label>Pregunta n° {{i+1}} {{e.get('pregunta').value}} </label>
+                                </div>
+                                
+                                <div>
+                                    <button class="btn" (click)="borrarPreguntaNueva(i)" >
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Pregunta</label>
+                                <input formControlName="pregunta" type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tipo de Respuesta</label>
+                                <select class="form-control">
+                                  <option>1</option>
+                                  <option>2</option>
+                                </select>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<pre>{{ this.formPreguntas.value | json }}</pre>
+  
+  
