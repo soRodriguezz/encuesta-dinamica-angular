@@ -9,27 +9,52 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 export class NuevaEncuestaComponent implements OnInit {
 
   public formPreguntas = new FormGroup({
-    nameAnswer : new FormControl(null, Validators.required),
-    preguntas : new FormArray([])
+    nombrePregunta : new FormControl(null, Validators.required),
+    preguntas: new FormArray([])
   });
 
   public preguntas = this.formPreguntas.get('preguntas') as FormArray;
-
+  public opciones : any;
+  public hiddenBtn: boolean = false;
+  
   constructor() {}
 
   ngOnInit(): void {}
 
   nuevaPregunta(){
-    this.preguntas.push(new FormGroup({
+    this.preguntas.push( new FormGroup({
       pregunta: new FormControl(null, Validators.required),
-      tipo: new FormControl(null, Validators.required)
+      opciones: new FormArray([])
     }));
-
-    console.log(this.formPreguntas.value);
   }
 
   borrarPreguntaNueva( arg: any ): void { 
     this.preguntas.removeAt(arg); 
   }
 
+  cambio( arg: any): void {
+    this.opciones = this.preguntas.controls[this.preguntas.length - 1].get('opciones') as FormArray;
+    this.opciones.clear();
+    
+    if ( arg === 'multiple' || arg === 'unica' ) {
+      this.hiddenBtn = true;
+    } else {
+      console.log('Es textarea');
+    }
+    
+  }
+
+  agregarOpcion(): void {
+    this.opciones = this.preguntas.controls[this.preguntas.length - 1].get('opciones') as FormArray;
+    this.opciones.push( new FormControl(null, Validators.required));
+  }
+
 }
+
+// let a = this.preguntas.controls[0].get('opciones') as FormArray;
+// this.opciones = this.preguntas.controls[0].get('opciones') as FormArray
+
+// a.clear();
+// a.push( new FormGroup({
+//  opcion: new FormControl(null, Validators.required)
+// }));

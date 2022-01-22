@@ -2,7 +2,7 @@
     <div class="form-row">
         <div class="form-group col-md-12">
             <label>Nombre de la encuesta</label>
-            <input formControlName="nameAnswer" type="text" class="form-control">
+            <input formControlName="nombrePregunta" type="text" class="form-control">
         </div>
     </div>
 
@@ -14,9 +14,9 @@
         </div>
 
         <div formArrayName="preguntas" >
-            <div *ngFor="let e of preguntas.controls; index as i" id={{i+1}} class="containerAccordion">
+            <div *ngFor="let e of preguntas.controls; index as i" id={{i+1}}>
                 <div [formGroup]="e">
-                    <div class="card">
+                    <div class="card mb-3">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
@@ -32,16 +32,42 @@
                             
                             <div class="form-group">
                                 <label>Pregunta</label>
-                                <input formControlName="pregunta" type="text" class="form-control">
+                                <textarea class="form-control" formControlName="pregunta"></textarea>
                             </div>
 
-                            <div class="form-group">
-                                <label>Tipo de Respuesta</label>
-                                <select class="form-control">
-                                  <option>1</option>
-                                  <option>2</option>
-                                </select>
-                              </div>
+                            <div class="row">
+                                
+                                <div class="form-group col-3">
+                                    <label>Tipo de Respuesta</label>
+                                    <select class="form-control" (change)="cambio($event.target.value)">
+                                        <option value="" selected disabled>-- Seleccione --</option>
+                                        <option value="multiple">Multiple</option>
+                                        <option value="unica">Unica</option>
+                                        <option value="textarea">Text Area</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-3" *ngIf="hiddenBtn">
+                                    <label>Tipo de Respuesta</label>
+                                    <button (click)="agregarOpcion()" class="btn btn-success">Agregar Opción</button>
+                                </div>
+                            </div>
+                            
+
+                            <hr>
+
+                            <!-- <div formArrayName="opciones">
+                                <div *ngFor="let a of opciones.controls; index as y" id=o{{y+1}} >
+                                    <div [formGroup]="a">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <input type="text" class="form-control" formControlName="opcion">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
                         </div>
                     </div>
                 </div>
