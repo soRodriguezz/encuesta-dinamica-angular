@@ -30,15 +30,14 @@ export class NuevaEncuestaComponent implements OnInit {
   }
 
   borrarPreguntaNueva( arg: any ): void { 
-    this.preguntas.removeAt(arg); 
+    this.preguntas.removeAt(arg);
   }
 
   cambio( arg: any, arg2: any): void {
     this.opciones = this.preguntas.controls[arg2].get('opciones') as FormArray;
     this.opciones.clear();
-    
+
     if ( arg === 'multiple' ) {
-      
       this.preguntas.controls[arg2].get('tipo').setValue('multiple');
       this.hiddenBtn = true;
     } else if ( arg === 'unica' ) {
