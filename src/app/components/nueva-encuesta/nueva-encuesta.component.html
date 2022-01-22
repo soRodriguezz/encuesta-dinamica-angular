@@ -36,10 +36,9 @@
                             </div>
 
                             <div class="row">
-                                
                                 <div class="form-group col-3">
                                     <label>Tipo de Respuesta</label>
-                                    <select class="form-control" (change)="cambio($event.target.value)">
+                                    <select class="form-control" (change)="cambio($event.target.value, i)">
                                         <option value="" selected disabled>-- Seleccione --</option>
                                         <option value="multiple">Multiple</option>
                                         <option value="unica">Unica</option>
@@ -47,17 +46,17 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3" *ngIf="hiddenBtn">
+                                <div class="col-3">
                                     <label>Tipo de Respuesta</label>
-                                    <button (click)="agregarOpcion()" class="btn btn-success">Agregar Opción</button>
+                                    <button (click)="agregarOpcion(i)" class="btn btn-success">Agregar Opción</button>
                                 </div>
                             </div>
                             
 
                             <hr>
 
-                            <!-- <div formArrayName="opciones">
-                                <div *ngFor="let a of opciones.controls; index as y" id=o{{y+1}} >
+                            <div formArrayName="opciones">
+                                <div *ngFor="let a of opciones.controls; index as y">
                                     <div [formGroup]="a">
                                         <div class="row">
                                             <div class="col-4">
@@ -66,7 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         </div>
                     </div>

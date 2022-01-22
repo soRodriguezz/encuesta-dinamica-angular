@@ -24,6 +24,7 @@ export class NuevaEncuestaComponent implements OnInit {
   nuevaPregunta(){
     this.preguntas.push( new FormGroup({
       pregunta: new FormControl(null, Validators.required),
+      tipo: new FormControl(null, Validators.required),
       opciones: new FormArray([])
     }));
   }
@@ -32,21 +33,31 @@ export class NuevaEncuestaComponent implements OnInit {
     this.preguntas.removeAt(arg); 
   }
 
-  cambio( arg: any): void {
-    this.opciones = this.preguntas.controls[this.preguntas.length - 1].get('opciones') as FormArray;
+  cambio( arg: any, arg2: any): void {
+    this.opciones = this.preguntas.controls[arg2].get('opciones') as FormArray;
     this.opciones.clear();
     
-    if ( arg === 'multiple' || arg === 'unica' ) {
+    if ( arg === 'multiple' ) {
+      
+      this.preguntas.controls[arg2].get('tipo').setValue('multiple');
       this.hiddenBtn = true;
+    } else if ( arg === 'unica' ) {
+      this.preguntas.controls[arg2].get('tipo').setValue('unica');
+      this.hiddenBtn = true;
+    } else if ( arg === 'textarea' ) {
+      this.preguntas.controls[arg2].get('tipo').setValue('textarea');
+      this.hiddenBtn = false;
     } else {
       console.log('Es textarea');
     }
     
   }
 
-  agregarOpcion(): void {
-    this.opciones = this.preguntas.controls[this.preguntas.length - 1].get('opciones') as FormArray;
-    this.opciones.push( new FormControl(null, Validators.required));
+  agregarOpcion( arg: any): void {
+    this.opciones = this.preguntas.controls[arg].get('opciones') as FormArray;
+    this.opciones.push( new FormGroup({
+      opcion: new FormControl(null, Validators.required)
+    }));
   }
 
 }
@@ -58,3 +69,6 @@ export class NuevaEncuestaComponent implements OnInit {
 // a.push( new FormGroup({
 //  opcion: new FormControl(null, Validators.required)
 // }));
+
+
+// this.preguntas.controls[arg2].get('opciones').setValidators(Validators.required);
